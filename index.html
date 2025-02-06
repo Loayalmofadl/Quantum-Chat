@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Chat</title>
+    <style>
+        /* تهيئة عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            direction: rtl;
+        }
+
+        .hero {
+            background-color: #3498db;
+            color: #fff;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: scroll;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .message.bot-message {
+            justify-content: flex-start;
+        }
+
+        .message.user-message {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .bot-message .message-content {
+            background-color: #ecf0f1;
+            color: #333;
+        }
+
+        .user-message .message-content {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .chat-input button:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* التصميم المتجاوب */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .chat-container {
+                width: 90%;
+            }
+
+            .message-content {
+                max-width: 80%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .chat-header {
+                font-size: 1rem;
+            }
+
+            .chat-box {
+                height: 300px;
+            }
+
+            .chat-input {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .chat-input button {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الصفحة الرئيسية -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>مرحبًا بك في Quantum Chat</h1>
+            <p>مكان حيث يلتقي الذكاء الاصطناعي بالتواصل البشري.</p>
+            <a href="#ai-chat" class="cta-button">ابدأ المحادثة الآن</a>
+        </div>
+    </section>
+
+    <!-- قسم شات الذكاء الاصطناعي -->
+    <section id="ai-chat" class="section">
+        <h2>شات الذكاء الاصطناعي</h2>
+        <p>تفاعل مع روبوتات محادثة ذكية لتحصل على تجربة فريدة.</p>
+        <div class="chat-container">
+            <div class="chat-header">شات مع الذكاء الاصطناعي</div>
+            <div class="chat-box" id="chat-box">
+                <div class="message bot-message">
+                    <div class="message-content">مرحبًا! كيف يمكنني مساعدتك اليوم؟</div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
+                <button onclick="sendMessage()">إرسال</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <p>© 2023 Quantum Chat. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        // استيراد مكتبة OpenAI
+        import OpenAI from 'https://cdn.jsdelivr.net/npm/openai@4.0.0/+esm';
+
+        // تهيئة OpenAI
+        const openai = new OpenAI({
+            baseURL: 'https://openrouter.ai/api/v1',
+            apiKey: '<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>', // استبدل بمفتاح API الخاص بك
+            defaultHeaders: {
+                'HTTP-Referer': '<YOUR_SITE_URL>', // اختياري. رابط موقعك.
+                'X-Title': '<YOUR_SITE_NAME>', // اختياري. اسم موقعك.
+            },
+        });
+
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            const chatBox = document.getElementById('chat-box');
+
+            if (userInput.trim() === "") return;
+
+            // إضافة رسالة المستخدم
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.innerHTML = `<div class="message-content">${userInput}</div>`;
+            chatBox.appendChild(userMessage);
+
+            // إرسال الرسالة إلى الـ API
+            try {
+                const completion = await openai.chat.completions.create({
+                    model: 'openai/gpt-4o', // يمكنك تغيير النموذج إذا لزم الأمر
+                    messages: [
+                        {
+                            role: 'user',
+                            content: userInput,
+                        },
+                    ],
+                });
+
+                // إضافة رد الروبوت
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot-message');
+                botMessage.innerHTML = `<div class="message-content">${completion.choices[0].message.content}</div>`;
+                chatBox.appendChild(botMessage);
+            } catch (error) {
+                console.error('Error:', error);
+                const errorMessage = document.createElement('div');
+                errorMessage.classList.add('message', 'bot-message');
+                errorMessage.innerHTML = `<div class="message-content">عذرًا، حدث خطأ أثناء معالجة طلبك.</div>`;
+                chatBox.appendChild(errorMessage);
+            }
+
+            // التمرير لأسفل
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // مسح حقل الإدخال
+            document.getElementById('user-input').value = '';
+        }
+    </script>
+</body>
+      </html>
