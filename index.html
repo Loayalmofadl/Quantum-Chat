@@ -1,282 +1,128 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Chat</title>
+    <title>شات الذكاء الاصطناعي</title>
     <style>
-        /* تهيئة عامة */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         body {
-            background-color: #f4f4f9;
-            color: #333;
-            direction: rtl;
-        }
-
-        .hero {
-            background-color: #3498db;
-            color: #fff;
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        .cta-button {
-            background-color: #e74c3c;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .section {
-            padding: 50px 20px;
-            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
         .chat-container {
-            max-width: 800px;
-            margin: 0 auto;
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background-color: #3498db;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-
-        .chat-box {
-            height: 400px;
-            overflow-y: scroll;
             padding: 20px;
-            background-color: #f9f9f9;
-        }
-
-        .message {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .message.bot-message {
-            justify-content: flex-start;
-        }
-
-        .message.user-message {
-            justify-content: flex-end;
-        }
-
-        .message-content {
-            max-width: 70%;
-            padding: 10px 15px;
             border-radius: 10px;
-            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 100%;
         }
 
-        .bot-message .message-content {
-            background-color: #ecf0f1;
+        h1 {
+            text-align: center;
             color: #333;
         }
 
-        .user-message .message-content {
-            background-color: #3498db;
-            color: #fff;
+        #chat-box {
+            height: 300px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            border-radius: 5px;
         }
 
-        .chat-input {
+        .input-area {
             display: flex;
-            padding: 15px;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
         }
 
-        .chat-input input {
+        input[type="text"] {
             flex: 1;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 1rem;
+            margin-right: 10px;
         }
 
-        .chat-input button {
-            background-color: #3498db;
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            margin-right: 10px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
         }
 
-        .chat-input button:hover {
-            background-color: #2980b9;
+        button:hover {
+            background-color: #218838;
         }
 
-        footer {
-            background-color: #2c3e50;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
+        .user-message {
+            color: #007bff;
+            margin-bottom: 10px;
         }
 
-        /* التصميم المتجاوب */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .chat-container {
-                width: 90%;
-            }
-
-            .message-content {
-                max-width: 80%;
-            }
+        .ai-message {
+            color: #28a745;
+            margin-bottom: 10px;
         }
 
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-            }
-
-            .chat-header {
-                font-size: 1rem;
-            }
-
-            .chat-box {
-                height: 300px;
-            }
-
-            .chat-input {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .chat-input button {
-                width: 100%;
-                margin-right: 0;
-            }
+        .error-message {
+            color: #dc3545;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- الصفحة الرئيسية -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>مرحبًا بك في Quantum Chat</h1>
-            <p>مكان حيث يلتقي الذكاء الاصطناعي بالتواصل البشري.</p>
-            <a href="#ai-chat" class="cta-button">ابدأ المحادثة الآن</a>
+    <div class="chat-container">
+        <h1>شات الذكاء الاصطناعي</h1>
+        <div id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
+            <button onclick="sendMessage()">إرسال</button>
         </div>
-    </section>
-
-    <!-- قسم شات الذكاء الاصطناعي -->
-    <section id="ai-chat" class="section">
-        <h2>شات الذكاء الاصطناعي</h2>
-        <p>تفاعل مع روبوتات محادثة ذكية لتحصل على تجربة فريدة.</p>
-        <div class="chat-container">
-            <div class="chat-header">شات مع الذكاء الاصطناعي</div>
-            <div class="chat-box" id="chat-box">
-                <div class="message bot-message">
-                    <div class="message-content">مرحبًا! كيف يمكنني مساعدتك اليوم؟</div>
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
-                <button onclick="sendMessage()">إرسال</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- تذييل الصفحة -->
-    <footer>
-        <p>© 2023 Quantum Chat. جميع الحقوق محفوظة.</p>
-    </footer>
+    </div>
 
     <script>
+        const apiKey = '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'; // استبدل بمفتاح API الخاص بك
+        const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
+
         async function sendMessage() {
             const userInput = document.getElementById('user-input').value;
+            if (!userInput) return;
+
             const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="user-message">أنت: ${userInput}</div>`;
 
-            if (userInput.trim() === "") return;
+            document.getElementById('user-input').value = '';
 
-            // إضافة رسالة المستخدم
-            const userMessage = document.createElement('div');
-            userMessage.classList.add('message', 'user-message');
-            userMessage.innerHTML = `<div class="message-content">${userInput}</div>`;
-            chatBox.appendChild(userMessage);
-
-            // إرسال الرسالة إلى OpenRouter API باستخدام fetch
             try {
-                const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer <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>`, // استبدل بمفتاح API الخاص بك
-                        'Content-Type': 'application/json',
-                        'HTTP-Referer': '<YOUR_SITE_URL>', // اختياري
-                        'X-Title': '<YOUR_SITE_NAME>', // اختياري
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'openai/gpt-4o', // يمكنك تغيير النموذج إذا لزم الأمر
-                        messages: [
-                            {
-                                role: 'user',
-                                content: userInput,
-                            },
-                        ],
-                    }),
+                        model: "gpt-3.5-turbo", // أو أي نموذج آخر
+                        messages: [{ role: "user", content: userInput }]
+                    })
                 });
 
                 const data = await response.json();
-
-                // إضافة رد الروبوت
-                const botMessage = document.createElement('div');
-                botMessage.classList.add('message', 'bot-message');
-                botMessage.innerHTML = `<div class="message-content">${data.choices[0].message.content}</div>`;
-                chatBox.appendChild(botMessage);
+                const aiResponse = data.choices[0].message.content;
+                chatBox.innerHTML += `<div class="ai-message">الذكاء الاصطناعي: ${aiResponse}</div>`;
             } catch (error) {
                 console.error('Error:', error);
-                const errorMessage = document.createElement('div');
-                errorMessage.classList.add('message', 'bot-message');
-                errorMessage.innerHTML = `<div class="message-content">عذرًا، حدث خطأ أثناء معالجة طلبك.</div>`;
-                chatBox.appendChild(errorMessage);
+                chatBox.innerHTML += `<div class="error-message">حدث خطأ أثناء الاتصال بالذكاء الاصطناعي.</div>`;
             }
-
-            // التمرير لأسفل
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            // مسح حقل الإدخال
-            document.getElementById('user-input').value = '';
         }
     </script>
 </body>
