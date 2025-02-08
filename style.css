@@ -226,7 +226,7 @@ body.hide-header .header{
 }
 
 .prompt__form-input:valid ~ #deleteButton{
-    right: 3.5rem;
+    left: 3.5rem;
 }
 
 .prompt__disclaim{
