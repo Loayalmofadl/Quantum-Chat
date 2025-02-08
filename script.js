@@ -28,7 +28,7 @@ const loadSavedChatHistory = () => {
         const userMessageHtml = `
 
             <div class="message__content">
-                <img class="message__avatar" src="https://i.suar.me/6G4nB/m" alt="User avatar">
+                <img class="message__avatar" src="https://i.suar.me/QloLK/m" alt="User avatar">
                <p class="message__text">${conversation.userMessage}</p>
             </div>
         
@@ -219,7 +219,7 @@ const handleOutgoingMessage = () => {
     const outgoingMessageHtml = `
     
         <div class="message__content">
-            <img class="message__avatar" src="https://i.suar.me/6G4nB/m" alt="User avatar">
+            <img class="message__avatar" src="https://i.suar.me/QloLK/m" alt="User avatar">
             <p class="message__text"></p>
         </div>
 
