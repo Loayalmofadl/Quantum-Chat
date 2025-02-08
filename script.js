@@ -45,7 +45,7 @@ const loadSavedChatHistory = () => {
         const responseHtml = `
         
            <div class="message__content">
-                <img class="message__avatar" src="https://i.suar.me/8G03M/m" alt="Gemini avatar">
+                <img class="message__avatar" src="https://github.com/Loayalmofadl/Quantum-Chat/blob/main/ezgif-2e2aba9780367-ezgif.com-gif-maker%20(1).gif" alt="Gemini avatar">
                 <p class="message__text"></p>
                 <div class="message__loading-indicator hide">
                     <div class="message__loading-bar"></div>
@@ -182,7 +182,7 @@ const displayLoadingAnimation = () => {
     const loadingHtml = `
 
         <div class="message__content">
-            <img class="message__avatar" src="https://i.suar.me/8G03M/m" alt="Gemini avatar">
+            <img class="message__avatar" src="https://github.com/Loayalmofadl/Quantum-Chat/blob/main/ezgif-2e2aba9780367-ezgif.com-gif-maker%20(1).gif" alt="Gemini avatar">
             <p class="message__text"></p>
             <div class="message__loading-indicator">
                 <div class="message__loading-bar"></div>
