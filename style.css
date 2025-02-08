@@ -98,10 +98,10 @@ body.hide-header .header{
     -webkit-background-clip: text;
     text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
-    font-size: 3.10rem;
+    font-size: 3.25rem;
     font-weight: 600;
     margin-bottom: 10px; /* إضافة مسافة صغيرة أسفل العنصر h1 */
-    padding-botton: 2px;
+    padding-botton: 5px;
 }
 
 .header__title h2 {
