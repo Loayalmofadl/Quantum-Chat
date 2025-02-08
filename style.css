@@ -477,22 +477,72 @@ blockquote{
 }
 
 
+/* أيقونة الرسالة */
+.chats .message__icon {
+    color: var(--text-color);
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    font-size: 1.25rem;
+    margin-left: 3.5rem;
+    transition: background 0.3s ease;
+}
 
+.chats .message__icon:hover {
+    background: var(--secondary-hover-color);
+}
+
+/* نقاط التحميل المتحركة */
 .dots {
-   width: 33.6px;
-   height: 30.9px;
-   --c: radial-gradient(farthest-side,#2788d9 90%,#0000);
-   background: var(--c) 50%  0,
-        var(--c) 0    100%,
-        var(--c) 100% 100%;
-   background-size: 13.4px 13.4px;
-   background-repeat: no-repeat;
-   position: relative;
-   animation: dots-p4ro8i 1s infinite;
+    width: 18px;
+    height: 18px;
+    --c: radial-gradient(farthest-side, #2788d9 90%, #0000);
+    background: var(--c) 50% 0,
+                var(--c) 0 100%,
+                var(--c) 100% 100%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    animation: dots-animation 1s infinite;
 }
 
-@keyframes dots-p4ro8i {
-   50%, 100% {
-      background-position: 100% 100%,50% 0,0 100%;
-   }
+@keyframes dots-animation {
+    50%, 100% {
+        background-position: 100% 100%, 50% 0, 0 100%;
+    }
 }
+
+/* مؤشر التحميل */
+.chats .message__loading-indicator {
+    display: none;
+    gap: 0.6rem;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.chats .message--loading .message__loading-indicator {
+    display: flex;
+}
+
+.chats .message__loading-indicator .message__loading-bar {
+    height: 1rem;
+    width: 100%;
+    border-radius: 0.135rem;
+    background-position: -800px 0;
+    background: linear-gradient(to right, #2563eb60 30%, var(--primary-color) 60%, #2563eb60);
+    animation: loading 3s linear infinite;
+}
+
+.chats .message__loading-indicator .message__loading-bar:first-child {
+    width: 85%;
+}
+
+.chats .message__loading-indicator .message__loading-bar:last-child {
+    width: 70%;
+}
+
