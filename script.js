@@ -28,7 +28,7 @@ const loadSavedChatHistory = () => {
         const userMessageHtml = `
 
             <div class="message__content">
-                <img class="message__avatar" src="https://i.suar.me/KoOgz/m" alt="User avatar">
+                <img class="message__avatar" src="https://i.suar.me/6G4nB/m" alt="User avatar">
                <p class="message__text">${conversation.userMessage}</p>
             </div>
         
@@ -45,7 +45,7 @@ const loadSavedChatHistory = () => {
         const responseHtml = `
         
            <div class="message__content">
-                <img class="message__avatar" src="https://i.suar.me/BqEWg/m" alt="Gemini avatar">
+                <img class="message__avatar" src="https://i.suar.me/v4rYo/m" alt="Gemini avatar">
                 <p class="message__text"></p>
                 <div class="message__loading-indicator hide">
                     <div class="message__loading-bar"></div>
@@ -182,7 +182,7 @@ const displayLoadingAnimation = () => {
     const loadingHtml = `
 
         <div class="message__content">
-            <img class="message__avatar" src="https://i.suar.me/BqEWg/m" alt="Gemini avatar">
+            <img class="message__avatar" src="https://i.suar.me/v4rYo/m" alt="Gemini avatar">
             <p class="message__text"></p>
             <div class="message__loading-indicator">
                 <div class="message__loading-bar"></div>
@@ -219,7 +219,7 @@ const handleOutgoingMessage = () => {
     const outgoingMessageHtml = `
     
         <div class="message__content">
-            <img class="message__avatar" src="https://i.suar.me/KoOgz/m" alt="User avatar">
+            <img class="message__avatar" src="https://i.suar.me/6G4nB/m" alt="User avatar">
             <p class="message__text"></p>
         </div>
 
