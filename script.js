@@ -44,16 +44,15 @@ const loadSavedChatHistory = () => {
 
         const responseHtml = `
         
-           <div class="chats">
-    <div class="message__icon">
-        <div class="dots"></div>
-    </div>
-    <div class="message__loading-indicator hide">
-        <div class="message__loading-bar"></div>
-        <div class="message__loading-bar"></div>
-        <div class="message__loading-bar"></div>
-    </div>
-</div>
+           <div class="message__content">
+                <img class="message__avatar" src="https://i.suar.me/Wj9Qa/m" alt="Gemini avatar">
+                <p class="message__text"></p>
+                <div class="message__loading-indicator hide">
+                    <div class="message__loading-bar"></div>
+                    <div class="message__loading-bar"></div>
+                    <div class="message__loading-bar"></div>
+                </div>
+            </div>
         `;
 
         const incomingMessageElement = createChatMessageElement(responseHtml, "message--incoming");
@@ -236,16 +235,15 @@ themeToggleButton.addEventListener('click', () => {
 });
 
 // Clear all chat history
-clearChatButton.addEven<div class="chats">
-    <div class="message__icon">
-        <div class="dots"></div>
-    </div>
-    <div class="message__loading-indicator hide">
-        <div class="message__loading-bar"></div>
-        <div class="message__loading-bar"></div>
-        <div class="message__loading-bar"></div>
-    </div>
-</div>
+<div class="message__content">
+                <img class="message__avatar" src="https://i.suar.me/Wj9Qa/m" alt="Gemini avatar">
+                <p class="message__text"></p>
+                <div class="message__loading-indicator hide">
+                    <div class="message__loading-bar"></div>
+                    <div class="message__loading-bar"></div>
+                    <div class="message__loading-bar"></div>
+                </div>
+            </div>
     tListener('click', () => {
     if (confirm("Are you sure you want to delete all chat history?")) {
         localStorage.removeItem("saved-api-chats");
