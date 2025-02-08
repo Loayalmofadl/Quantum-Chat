@@ -44,12 +44,16 @@ const loadSavedChatHistory = () => {
 
         const responseHtml = `
         
-           <div class="message__content">
-           <p class="message__text"></p>
-                <div class="dots"></div>
-            </div>
-            <span onClick="copyMessageToClipboard(this)" class="message__icon hide"><i class='bx bx-copy-alt'></i></span>
-        
+           <div class="chats">
+    <div class="message__icon">
+        <div class="dots"></div>
+    </div>
+    <div class="message__loading-indicator hide">
+        <div class="message__loading-bar"></div>
+        <div class="message__loading-bar"></div>
+        <div class="message__loading-bar"></div>
+    </div>
+</div>
         `;
 
         const incomingMessageElement = createChatMessageElement(responseHtml, "message--incoming");
@@ -208,10 +212,7 @@ const handleOutgoingMessage = () => {
 
     const outgoingMessageHtml = `
     
-        <div class="message__content">
-            <img class="message__avatar" src="https://i.suar.me/6G4nB/m" alt="User avatar">
-            <p class="message__text"></p>
-        </div>
+        
 
     `;
 
@@ -235,7 +236,17 @@ themeToggleButton.addEventListener('click', () => {
 });
 
 // Clear all chat history
-clearChatButton.addEventListener('click', () => {
+clearChatButton.addEven<div class="chats">
+    <div class="message__icon">
+        <div class="dots"></div>
+    </div>
+    <div class="message__loading-indicator hide">
+        <div class="message__loading-bar"></div>
+        <div class="message__loading-bar"></div>
+        <div class="message__loading-bar"></div>
+    </div>
+</div>
+    tListener('click', () => {
     if (confirm("Are you sure you want to delete all chat history?")) {
         localStorage.removeItem("saved-api-chats");
 
