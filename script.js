@@ -45,13 +45,7 @@ const loadSavedChatHistory = () => {
         const responseHtml = `
         
            <div class="message__content">
-                <img class="message__avatar" src="https://i.suar.me/Wj9Qa/m" alt="Gemini avatar">
-                <p class="message__text"></p>
-                <div class="message__loading-indicator hide">
-                    <div class="message__loading-bar"></div>
-                    <div class="message__loading-bar"></div>
-                    <div class="message__loading-bar"></div>
-                </div>
+                <div class="dots"></div>
             </div>
             <span onClick="copyMessageToClipboard(this)" class="message__icon hide"><i class='bx bx-copy-alt'></i></span>
         
@@ -182,13 +176,7 @@ const displayLoadingAnimation = () => {
     const loadingHtml = `
 
         <div class="message__content">
-            <img class="message__avatar" src="https://i.suar.me/Wj9Qa/m" alt="Gemini avatar">
-            <p class="message__text"></p>
-            <div class="message__loading-indicator">
-                <div class="message__loading-bar"></div>
-                <div class="message__loading-bar"></div>
-                <div class="message__loading-bar"></div>
-            </div>
+            <div class="dots"></div>
         </div>
         <span onClick="copyMessageToClipboard(this)" class="message__icon hide"><i class='bx bx-copy-alt'></i></span>
     
