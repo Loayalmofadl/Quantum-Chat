@@ -117,7 +117,8 @@ const requestApiResponse = async (incomingMessageElement) => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ role: "user", parts: [{ text: currentUserMessage }] }]
+                contents: [{ role: "system", parts: [{ text: "جاوبني بسخرية: " + currentUserMessage }] }
+] }]
             }),
         });
 
