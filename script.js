@@ -108,16 +108,26 @@ const showTypingEffect = (rawText, htmlText, messageElement, incomingMessageElem
     }, 75);
 };
 
-// Fetch API response based on user input
+
+
+// Add copy button to code blocks
+const addCopyButtonToCodeBlocks = () => {
+    const codeBlocks = document.querySelectorAll('pre');
+    codeBlocks.forEach((block) => {
+        const codeElement = block.querySelector('code');
+        let language = [...codeElement.class// Fetch API response based on user input (مع إضافة الطقطقة)
 const requestApiResponse = async (incomingMessageElement) => {
     const messageTextElement = incomingMessageElement.querySelector(".message__text");
+
+    // نضيف أمر الطقطقة تلقائياً
+    const modifiedUserMessage = currentUserMessage + " ورد علي بشكل ساخر ومستفز.";
 
     try {
         const response = await fetch(API_REQUEST_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ role: "user", parts: [{ text: currentUserMessage }] }]
+                contents: [{ role: "user", parts: [{ text: modifiedUserMessage }] }]
             }),
         });
 
@@ -135,7 +145,7 @@ const requestApiResponse = async (incomingMessageElement) => {
         // Save conversation in local storage
         let savedConversations = JSON.parse(localStorage.getItem("saved-api-chats")) || [];
         savedConversations.push({
-            userMessage: currentUserMessage,
+            userMessage: currentUserMessage, // نحفظ الرسالة الأصلية بدون الإضافة
             apiResponse: responseData
         });
         localStorage.setItem("saved-api-chats", JSON.stringify(savedConversations));
@@ -146,14 +156,7 @@ const requestApiResponse = async (incomingMessageElement) => {
     } finally {
         incomingMessageElement.classList.remove("message--loading");
     }
-};
-
-// Add copy button to code blocks
-const addCopyButtonToCodeBlocks = () => {
-    const codeBlocks = document.querySelectorAll('pre');
-    codeBlocks.forEach((block) => {
-        const codeElement = block.querySelector('code');
-        let language = [...codeElement.classList].find(cls => cls.startsWith('language-'))?.replace('language-', '') || 'Text';
+};List].find(cls => cls.startsWith('language-'))?.replace('language-', '') || 'Text';
 
         const languageLabel = document.createElement('div');
         languageLabel.innerText = language.charAt(0).toUpperCase() + language.slice(1);
