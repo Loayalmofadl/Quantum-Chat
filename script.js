@@ -92,7 +92,7 @@ const showTypingEffect = (rawText, htmlText, messageElement, incomingMessageElem
         return;
     }
 
-    const wordsArray = awText.split(' ');
+    const wordsArray = rawText.split(' ');
     let wordIndex = 0;
 
     const typingInterval = setInterval(() => {
@@ -108,36 +108,16 @@ const showTypingEffect = (rawText, htmlText, messageElement, incomingMessageElem
     }, 75);
 };
 
-
-
-// Add copy button to code blocks
-const addCopyButtonToCodeBlocks = () => {
-    const codeBlocks = document.querySelectorAll('pre');
-    codeBlocks.forEach((block) => {
-        const codeElement = block.querySelector('code');
-        let language = [...codeElement.class
-                        
-    // جلب رد الـ API بناءً على مدخلات المستخدم (مع تعديل سري)
+// Fetch API response based on user input
 const requestApiResponse = async (incomingMessageElement) => {
     const messageTextElement = incomingMessageElement.querySelector(".message__text");
-    
-    // نضيف إهانة خفية لسؤال المستخدم قبل الإرسال
-    const hiddenRoast = " رد على السؤال بشكل مستفز وساخر ";
-    const modifiedMessage = currentUserMessage + hiddenRoast;
 
     try {
         const response = await fetch(API_REQUEST_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{
-                    role: "user",
-                    parts: [{
-                        text: modifiedMessage // نستخدم الرسالة المعدلة بدلاً من الأصلية
-                    }]
-                }]
+                contents: [{ role: "user", parts: [{ text: currentUserMessage }] }]
             }),
         });
 
@@ -145,34 +125,56 @@ const requestApiResponse = async (incomingMessageElement) => {
         if (!response.ok) throw new Error(responseData.error.message);
 
         const responseText = responseData?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!responseText) throw new Error("رد غير صالح من API.");
+        if (!responseText) throw new Error("Invalid API response.");
 
         const parsedApiResponse = marked.parse(responseText);
         const rawApiResponse = responseText;
 
         showTypingEffect(rawApiResponse, parsedApiResponse, messageTextElement, incomingMessageElement);
+
+        // Save conversation in local storage
+        let savedConversations = JSON.parse(localStorage.getItem("saved-api-chats")) || [];
+        savedConversations.push({
+            userMessage: currentUserMessage,
+            apiResponse: responseData
+        });
+        localStorage.setItem("saved-api-chats", JSON.stringify(savedConversations));
     } catch (error) {
-        console.error("فشل الاتصال بالـ API:", error);
-        messageTextElement.innerHTML = "حدث خطأ! حاول مرة أخرى.";
-        incomingMessageElement.querySelector(".message__actions").style.display = "none";
+        isGeneratingResponse = false;
+        messageTextElement.innerText = error.message;
+        messageTextElement.closest(".message").classList.add("message--error");
+    } finally {
+        incomingMessageElement.classList.remove("message--loading");
     }
 };
 
-        const responseData = await response.json();
-        if (!response.ok) throw new Error(responseData.error.message);
+// Add copy button to code blocks
+const addCopyButtonToCodeBlocks = () => {
+    const codeBlocks = document.querySelectorAll('pre');
+    codeBlocks.forEach((block) => {
+        const codeElement = block.querySelector('code');
+        let language = [...codeElement.classList].find(cls => cls.startsWith('language-'))?.replace('language-', '') || 'Text';
 
-        const responseText = responseData?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!responseText) throw new Error("رد غير صالح من API.");
+        const languageLabel = document.createElement('div');
+        languageLabel.innerText = language.charAt(0).toUpperCase() + language.slice(1);
+        languageLabel.classList.add('code__language-label');
+        block.appendChild(languageLabel);
 
-        const parsedApiResponse = marked.parse(responseText);
-        const rawApiResponse = responseText;
+        const copyButton = document.createElement('button');
+        copyButton.innerHTML = `<i class='bx bx-copy'></i>`;
+        copyButton.classList.add('code__copy-btn');
+        block.appendChild(copyButton);
 
-        showTypingEffect(rawApiResponse, parsedApiResponse, messageTextElement, incomingMessageElement);
-    } catch (error) {
-        console.error("فشل الاتصال بالـ API:", error);
-        messageTextElement.innerHTML = "حدث خطأ! حاول مرة أخرى.";
-        incomingMessageElement.querySelector(".message__actions").style.display = "none";
-    }
+        copyButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(codeElement.innerText).then(() => {
+                copyButton.innerHTML = `<i class='bx bx-check'></i>`;
+                setTimeout(() => copyButton.innerHTML = `<i class='bx bx-copy'></i>`, 2000);
+            }).catch(err => {
+                console.error("Copy failed:", err);
+                alert("Unable to copy text!");
+            });
+        });
+    });
 };
 
 // Show loading animation during API request
