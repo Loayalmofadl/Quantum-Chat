@@ -108,17 +108,44 @@ const showTypingEffect = (rawText, htmlText, messageElement, incomingMessageElem
     }, 75);
 };
 
-// Fetch API response based on user input
+
+
+// Add copy button to code blocks
+const addCopyButtonToCodeBlocks = () => {
+    const codeBlocks = document.querySelectorAll('pre');
+    codeBlocks.forEach((block) => {
+        const codeElement = block.querySelector('code');
+        let language = [...codeElement.classList].find(cls => cls.startsWith('language-'))?.replace('language-', '') || 'Text';
+
+        const languageLabel = document.createElement('div');
+        languageLabel.innerText = language.charAt(0).toUpperCase() + language.slice(1);
+        languageLabel.classList.add('code__language-label');
+        block.appendChild(languageLabel);
+
+        const copyButton = document.createElement('button');
+        copyButton.innerHTML = `<i class='bx bx-copy'></i>`;
+        copyButton.classList.add('code__copy-btn');
+        block.appendChild(copyButton);
+
+        copyButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(codeElement.innerText).then(() => {
+                copyButton.innerHTML = `<i class='bx bx-check'></i>`;
+                setTimeout(() => copyButton.i
+                    
+                    // Fetch API response based on user input
 const requestApiResponse = async (incomingMessageElement) => {
     const messageTextElement = incomingMessageElement.querySelector(".message__text");
 
     try {
+        // إضافة النص الساخر قبل الرسالة المرسلة
+        const modifiedMessage = "جاوبني بسخرية: " + currentUserMessage;
+
+        // إرسال الرسالة المعدلة إلى API
         const response = await fetch(API_REQUEST_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ role: "system", parts: [{ text: "جاوبني بسخرية: " + currentUserMessage }] }
-] }]
+                contents: [{ role: "user", parts: [{ text: modifiedMessage }] }]
             }),
         });
 
@@ -147,29 +174,7 @@ const requestApiResponse = async (incomingMessageElement) => {
     } finally {
         incomingMessageElement.classList.remove("message--loading");
     }
-};
-
-// Add copy button to code blocks
-const addCopyButtonToCodeBlocks = () => {
-    const codeBlocks = document.querySelectorAll('pre');
-    codeBlocks.forEach((block) => {
-        const codeElement = block.querySelector('code');
-        let language = [...codeElement.classList].find(cls => cls.startsWith('language-'))?.replace('language-', '') || 'Text';
-
-        const languageLabel = document.createElement('div');
-        languageLabel.innerText = language.charAt(0).toUpperCase() + language.slice(1);
-        languageLabel.classList.add('code__language-label');
-        block.appendChild(languageLabel);
-
-        const copyButton = document.createElement('button');
-        copyButton.innerHTML = `<i class='bx bx-copy'></i>`;
-        copyButton.classList.add('code__copy-btn');
-        block.appendChild(copyButton);
-
-        copyButton.addEventListener('click', () => {
-            navigator.clipboard.writeText(codeElement.innerText).then(() => {
-                copyButton.innerHTML = `<i class='bx bx-check'></i>`;
-                setTimeout(() => copyButton.innerHTML = `<i class='bx bx-copy'></i>`, 2000);
+};nnerHTML = `<i class='bx bx-copy'></i>`, 2000);
             }).catch(err => {
                 console.error("Copy failed:", err);
                 alert("Unable to copy text!");
